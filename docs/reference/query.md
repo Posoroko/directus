@@ -616,7 +616,7 @@ const result = await client.request(
 
 ## Deep
 
-Deep allows you to set any of the other query parameters on a nested relational dataset.
+Deep allows you to set any of the other query parameters on a nested relational dataset.  
 
 ### Examples
 
@@ -683,13 +683,21 @@ const client = createDirectus('https://directus.example.com').with(staticToken()
 
 const result = await client.request(
 	readItems('articles', {
+		fileds: [ '*', 'translations'],
 		filter: {
-			authors: {
-				name: {
-					_eq: 'John',
-				},
+			published: {
+				_eq: true,
 			},
 		},
+		deep: {
+			translations: {
+				_filter: {
+					languages_code: {
+						_eq: 'fr'
+					}
+				}
+			}
+		}
 	})
 );
 ```
