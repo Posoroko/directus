@@ -685,8 +685,8 @@ const result = await client.request(
 	readItems('articles', {
 		fileds: [ '*', 'translations'],
 		filter: {
-			published: {
-				_eq: true,
+			status: {
+				_eq: "published",
 			},
 		},
 		deep: {
