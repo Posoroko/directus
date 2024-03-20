@@ -18,9 +18,15 @@ There are three types of tokens that can be used to authenticate within Directus
 expiration time, and are thus the most secure option to use. The tokens are returned with a refresh token that can be
 used to retrieve a new access token via the [refresh](#refresh) endpoint/mutation.
 
+They are ideal for scenarios where you need a token that is only valid for a short period of time. For example, 
+you might use a temporary token for a single API request that needs to be authenticated.
+
 **Session Token (JWT)** can also be returned by the [login](#login) endpoint/mutation.\
 Session tokens combine both a refresh token and access token in a single cookie. These tokens should not have a short expiration
 time like the Temporary Tokens as you cannot refresh these after they have expired.
+
+They are ideal for scenarios where you want the user to remain authenticated over a long period of time, even if they close their 
+browser or turn off their device. They are typically used for user sessions in a web application.
 
 **Static Tokens** can be set for each platform user, and never expire. They are less secure, but quite useful for
 server-to-server communication. They are saved as plain-text within `directus_users.token`. Static Tokens are created in
