@@ -65,6 +65,11 @@ tokens can be used as well (see
 
 ### Create a Directus Client with a Token
 
+In the following example, the Directus client is initially set up with a static token. If a user tries to log in,
+the client switches to use a temporary or session token. If the login is successful, 
+the client will use the session token for all subsequent requests, allowing the user to access resources based on their role. 
+If the login fails, the client will continue to use the static token.
+
 ```js
 import { createDirectus, staticToken, rest } from '@directus/sdk';
 
