@@ -126,6 +126,12 @@ The user's one-time-password (if MFA is enabled).
 Whether to retrieve the refresh token in the JSON response, or in a `httpOnly` cookie. One of `json`, `cookie` or `session`.
 Defaults to `json`.
 
+`mode: json`\ In this mode, the login method returns a JSON response containing a temporary token. This token is short-lived and needs to be manually included in the Authorization header of subsequent API requests. This mode does not set any cookies. 
+
+`mode: session`\ In this mode, the login method does not return a token in the JSON response. Instead, it sets a long-lived session token in a HTTP-only cookie. This token is automatically included in all subsequent API requests made from the same browser. This mode is ideal for scenarios where you want the user to remain authenticated over a long period of time, even if they close their browser or turn off their device.
+
+`mode: cookie`\ This mode is similar to session, but it sets a short-lived token in a HTTP-only cookie. This token is automatically included in all subsequent API requests made from the same browser. However, because the token is short-lived, it needs to be refreshed regularly.
+
 ### Response
 
 `access_token` **string**\
@@ -185,7 +191,11 @@ import { createDirectus, authentication, rest, login } from '@directus/sdk';
 const client = createDirectus('https://directus.example.com').with(authentication()).with(rest());
 
 // login using the authentication composable
+// json mode by default for a temporary cooki
 const result = await client.login('admin@example.com', 'd1r3ctu5');
+
+// session mode for a session token
+const result = await client.login('admin@example.com', 'd1r3ctu5', { mode: 'sessionse });
 
 // login http request
 const result = await client.request(login('admin@example.com', 'd1r3ctu5'));
